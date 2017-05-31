@@ -19,14 +19,14 @@ class Banner
      * 获取指定id的banner信息
      * @url /banner/:id
      * @http GET
-     * @id banner的id号
-     *
+     * @id banner的id
      */
     public function getBanner($id)
     {
         (new IDMustBePositiveInt())->gocheck();
-
+//         $banner=BannerModel::with(['items','items.img'])->find($id);
         $banner = BannerModel::getBannerById($id);
+        $banner->hidden(['id']);
         if (!$banner) {
             throw new BannerMissException();
         }
