@@ -10,7 +10,6 @@ namespace app\api\validate;
 
 
 use app\lib\exception\ParameterException;
-use think\Exception;
 use think\Request;
 use think\Validate;
 
@@ -18,7 +17,7 @@ class BaseValidate extends Validate
 {
     /**
      * @return bool
-     * @throws Exception
+     * @throws ParameterException
      */
     public function gocheck()
     {
@@ -27,12 +26,23 @@ class BaseValidate extends Validate
         $result=$this->batch()->check($params);
         if(!$result){
             $e=new ParameterException([
-                'msg'=>$this->error
+                'msg' => is_array($this->error) ? implode(
+                    ';', $this->error) : $this->error,
             ]);
             throw $e;
         }
         else{
             return true;
+        }
+    }
+
+    protected function isPositiveInteger($value, $rule = '',
+                                         $data = '', $field = '')
+    {
+        if (is_numeric($value) && is_int($value + 0) && ($value + 0) > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
