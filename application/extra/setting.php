@@ -7,5 +7,6 @@
  */
 
 return[
-    'img_prefix'=>'http://tp5.cn/images'
+    'img_prefix'=>'http://tp5.cn/images',
+    'token_expire_in'=>7200
 ];

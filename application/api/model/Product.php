@@ -27,4 +27,10 @@ class Product extends BaseModel
         return $products;
     }
 
+    public static function getProductByCategoryID($categoryID)
+    {
+        $products=self::where('category_id','=',$categoryID)
+            ->select();
+        return $products;
+    }
 }
